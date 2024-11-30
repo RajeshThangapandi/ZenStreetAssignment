@@ -15,7 +15,7 @@ interface FormData {
   companyName: string;
 }
 
-export default function BookingForm() {
+const BookingForm=()=> {
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -268,3 +268,4 @@ export default function BookingForm() {
 }
 
 
+export default BookingForm;
