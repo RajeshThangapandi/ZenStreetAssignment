@@ -2,10 +2,7 @@
   "name": "my-next-app",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-  "build": "react-scripts build"
-}
-
+ 
   "scripts": {
     "dev": "next dev",
     "build": "next build",
