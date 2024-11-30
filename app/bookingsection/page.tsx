@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { ArrowLeft, Home, Phone, Video, MapPin, ChevronRight } from 'lucide-react'
+import { ArrowLeft, Home, Phone, Video, MapPin } from 'lucide-react'
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from "next/navigation";
 
@@ -32,7 +32,14 @@ const timeSlots: Record<string, TimeSlot[]> = {
 
 const cn = (...classes: string[]) => classes.filter(Boolean).join(' ')
 
-const Calendar = ({ selected, onSelect, isDisabled }: any) => {
+interface CalendarProps {
+  selected: Date | undefined;
+  onSelect: (date: Date) => void;
+  isDisabled: boolean;
+}
+
+
+const Calendar: React.FC<CalendarProps>  = ({ selected, onSelect, isDisabled }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
 
   const availableDates = [5, 10, 15, 20, 25] // Modify as needed
@@ -125,15 +132,35 @@ const Calendar = ({ selected, onSelect, isDisabled }: any) => {
 
 
 export default function BookingPage() {
-
+  const filteredTimeSlots = (duration: string) => {
+    switch (duration) {
+      case '45 min':
+        return timeSlots;
+        
+      case '60 min':
+        return { Morning: timeSlots.Morning.slice(0, 2), Afternoon: timeSlots.Afternoon.slice(0, 3), Evening: timeSlots.Evening.slice(0, 3) };
+      case '90 min':
+        return { Morning: timeSlots.Morning.slice(0, 1), Afternoon: timeSlots.Afternoon.slice(0, 2), Evening: timeSlots.Evening.slice(0, 2) };
+      default:
+        return timeSlots;
+    }
+  };
   const searchParams = useSearchParams();
 const selectedprice = searchParams.get("price");
-// const selectduration =searchParams.get("duration"); // this returns 90min
+const selectduration =searchParams.get("duration"); // this returns 90min
 
 
 
+interface ButtonProps {
+  children: React.ReactNode;
+  onClick: () => void;
+  className?: string;
+  disabled?: boolean;
+  style?: React.CSSProperties;
+  variant?: 'ghost' | 'outline';  // Specify your variants
+}
 
-  const Button = ({ children, onClick, className, disabled, style, variant }: any) => {
+  const Button:React.FC<ButtonProps> = ({ children, onClick, className, disabled, style, variant }) => {
     const isGhostVariant = variant === 'ghost'; // Check if the variant is 'ghost'
   
     return (
@@ -158,7 +185,6 @@ const selectedprice = searchParams.get("price");
   const [active, setActive] = useState('inPerson');
   const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-  const [therapyMode, setTherapyMode] = useState<string>(''); // Track selected therapy mode
 
   const handleSlotSelection = (time: string) => {
     setSelectedSlots((prev) =>

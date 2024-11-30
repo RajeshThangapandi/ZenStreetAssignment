@@ -1,22 +1,22 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function BookingConfirmation() {
-  const searchParams = useSearchParams();  // Use searchParams hook to access query params
+  const router = useRouter();
   const [email, setEmail] = useState<string | null>(null);
 
+  // Wait for the query to be available
   useEffect(() => {
-    const emailFromQuery = searchParams.get("email");  // Try to get email from query
-    console.log("Email from query:", emailFromQuery);  // Debugging step
-    if (emailFromQuery) {
-      setEmail(emailFromQuery);  // Set email if it's found
+    console.log("Router query:", router.query);  // Add this to debug if query parameters are loaded
+    if (router.query?.email) {
+      setEmail(router.query.email as string); // Set email from query parameter
     }
-  }, [searchParams]);  // Depend on searchParams to ensure it updates after page load
+  }, [router.query]);
 
-  // If email is not found yet, show "Loading..."
-  if (!email) {
+  // Loading state while waiting for the query to be populated
+  if (email === null) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-xl">Loading...</p>
