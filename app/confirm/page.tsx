@@ -1,25 +1,20 @@
-"use client";
+"use client";  // This ensures the component is treated as a client-side component
 
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useSearchParams } from 'next/navigation';  // Import new hooks for pathname and search params
 
 export default function BookingConfirmation() {
-  const router = useRouter();
-  const [email, setEmail] = useState<string | null>(null);
+  const pathname = usePathname();  // Use usePathname to get the current pathname
+  const searchParams = useSearchParams();  // Use useSearchParams to get query parameters
+  const email = searchParams.get("email");  // Retrieve the 'email' query parameter
 
-  // Wait for the query to be available
-  useEffect(() => {
-    console.log("Router query:", router.query);  // Add this to debug if query parameters are loaded
-    if (router.query?.email) {
-      setEmail(router.query.email as string); // Set email from query parameter
-    }
-  }, [router.query]);
-
-  // Loading state while waiting for the query to be populated
-  if (email === null) {
+  // If the email query parameter is missing or undefined, display an error
+  if (!email) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xl">Loading...</p>
+      <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-white">
+        <h1 className="text-[32px] font-bold text-gray-900">Error</h1>
+        <p className="text-gray-600 text-[15px] leading-relaxed max-w-md mx-auto">
+          Missing email query parameter. Please check the URL.
+        </p>
       </div>
     );
   }
@@ -59,7 +54,7 @@ export default function BookingConfirmation() {
         </div>
 
         <div className="pt-6">
-          <button 
+          <button
             onClick={() => window.location.href = '/'}
             className="w-full bg-[#3B82F6] text-white rounded-md py-3 px-4 text-[15px] font-medium hover:bg-blue-600 transition-colors"
           >

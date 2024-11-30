@@ -2,14 +2,14 @@
 
 import { useState } from 'react'
 import { Inter } from 'next/font/google'
-import { ChevronDown, Home, Phone, MapPin } from 'lucide-react'
+import { ChevronDown,  MapPin } from 'lucide-react'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function TherapistProfile() {
    
     const [visibleTestimonials, setVisibleTestimonials] = useState(2);
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded] = useState(false)
 
   const testimonials = [
     {
@@ -94,11 +94,12 @@ export default function TherapistProfile() {
         <section className="mb-8">
           <h2 className="text-2xl font-bold mb-4">About me</h2>
           <p className="text-secondary-foreground mb-2">
-            Hello, I'm Swetha, a licensed therapist dedicated to guiding individuals through
-            life's challenges with empathy and expertise. With over 10 years of experience, I
-            specialize in helping clients manage anxiety, depression, and relationship issues
-            through personalized, evidence-based practices.
-          </p>
+  Hello, I&apos;m Swetha, a licensed therapist dedicated to guiding individuals through
+  life&apos;s challenges with empathy and expertise. With over 10 years of experience, I
+  specialize in helping clients manage anxiety, depression, and relationship issues
+  through personalized, evidence-based practices.
+</p>
+
           <button className="text-primary hover:underline">Read more</button>
         </section>
 

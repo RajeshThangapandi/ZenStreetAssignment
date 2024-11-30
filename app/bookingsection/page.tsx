@@ -132,22 +132,9 @@ const Calendar: React.FC<CalendarProps>  = ({ selected, onSelect, isDisabled }) 
 
 
 export default function BookingPage() {
-  const filteredTimeSlots = (duration: string) => {
-    switch (duration) {
-      case '45 min':
-        return timeSlots;
-        
-      case '60 min':
-        return { Morning: timeSlots.Morning.slice(0, 2), Afternoon: timeSlots.Afternoon.slice(0, 3), Evening: timeSlots.Evening.slice(0, 3) };
-      case '90 min':
-        return { Morning: timeSlots.Morning.slice(0, 1), Afternoon: timeSlots.Afternoon.slice(0, 2), Evening: timeSlots.Evening.slice(0, 2) };
-      default:
-        return timeSlots;
-    }
-  };
+ 
   const searchParams = useSearchParams();
 const selectedprice = searchParams.get("price");
-const selectduration =searchParams.get("duration"); // this returns 90min
 
 
 
@@ -185,6 +172,7 @@ interface ButtonProps {
   const [active, setActive] = useState('inPerson');
   const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [therapyMode, setTherapyMode] = useState<string>(''); // Track selected therapy mode
 
   const handleSlotSelection = (time: string) => {
     setSelectedSlots((prev) =>

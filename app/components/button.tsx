@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, AnchorHTMLAttributes } from 'react';
+import React, { ButtonHTMLAttributes, AnchorHTMLAttributes,ReactElement } from 'react';
 import clsx from 'clsx';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -36,9 +36,9 @@ export default function Button({
   // If `asChild` is true, render as an <a> element
   if (asChild) {
     // Prevent nesting of anchor tags
-    if (children && (children as any).type === 'a') {
+    if (React.isValidElement(children) && (children as ReactElement).type === 'a') {
       console.warn("Button's children should not be an anchor element when using 'asChild'");
-      return null; // You can choose to return null or handle it differently
+      return null; // or handle it differently
     }
 
     return (

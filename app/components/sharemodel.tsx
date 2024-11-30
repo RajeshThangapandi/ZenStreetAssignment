@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 export default function ShareModal({closeModal}) {
   const [showCopied, setShowCopied] = useState(false)
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen] = useState(true)
   const pageUrl = 'http://www.therapist-swetha.com/profile/view'
 
   const handleCopyLink = async () => {
