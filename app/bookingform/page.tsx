@@ -3,7 +3,7 @@
 import { ArrowLeft, Calendar, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState,Suspense } from "react";
 import ReactCalendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -90,7 +90,8 @@ export default function BookingForm() {
     );
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 flex items-center justify-center">
+    <Suspense fallback={<div>Loading...</div>}>
+<div className="min-h-screen bg-gray-50 p-4 flex items-center justify-center">
       <div className="max-w-xl w-full">
         {/* Move the ArrowLeft button to the left corner */}
         <button
@@ -261,5 +262,9 @@ export default function BookingForm() {
         </div>
       )}
     </div>
+        </Suspense>
+    
   );
 }
+
+
