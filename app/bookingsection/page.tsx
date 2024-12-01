@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { ArrowLeft, Home, Phone, Video, MapPin } from 'lucide-react'
 import { useRouter } from 'next/navigation';
-import { useSearchParams } from "next/navigation";
+import queryString from 'query-string'
 
 
 type TimeSlot = { time: string; period: 'Morning' | 'Afternoon' | 'Evening' }
@@ -132,10 +132,13 @@ const Calendar: React.FC<CalendarProps>  = ({ selected, onSelect, isDisabled }) 
 
 
 export default function BookingPage() {
- 
-  const searchParams = useSearchParams();
-const selectedprice = searchParams.get("price");
+let selectedprice:any;
+  // Ensure window is available before accessing it
+  if (typeof window !== 'undefined') {
+    const queryParams = queryString.parse(window.location.search); // Parse query string
+    selectedprice = queryParams.price; // Get 'price' from the parsed query parameters
 
+  }
 
 
 interface ButtonProps {
