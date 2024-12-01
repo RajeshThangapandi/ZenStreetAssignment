@@ -49,7 +49,7 @@ const GridLayout = () => {
                     />
                   </div>
                   <div className="mb-2 flex items-center justify-center gap-2">
-                    <Share2 className="h-6 w-6 text-black" />
+                    <Share2 className="h-6 w-6 text-black" onClick={openShareModal}/>
                     <h1 className="text-xl font-semibold text-black">Swetha Varma</h1>
                     <MdVerified className="text-blue-500 h-5 w-5" />
                   </div>
