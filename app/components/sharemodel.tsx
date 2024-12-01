@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-export default function ShareModal({closeModal}) {
+export default function ShareModal({ closeModal }) {
   const [showCopied, setShowCopied] = useState(false)
   const [isOpen] = useState(true)
   const pageUrl = 'http://www.therapist-swetha.com/profile/view'
@@ -14,6 +14,31 @@ export default function ShareModal({closeModal}) {
       setTimeout(() => setShowCopied(false), 2000)
     } catch (err) {
       console.error('Failed to copy:', err)
+    }
+  }
+
+  const handleSocialShare = (platform) => {
+    let shareUrl = ''
+    
+    switch (platform) {
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`
+        break
+      case 'whatsapp':
+        shareUrl = `https://wa.me/?text=${encodeURIComponent(pageUrl)}`
+        break
+      case 'twitter':
+        shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}`
+        break
+      case 'mail':
+        shareUrl = `mailto:?subject=Check this page&body=${encodeURIComponent(pageUrl)}`
+        break
+      default:
+        break
+    }
+
+    if (shareUrl) {
+      window.open(shareUrl, '_blank', 'noopener,noreferrer')
     }
   }
 
@@ -55,6 +80,7 @@ export default function ShareModal({closeModal}) {
                   />
                 </svg>
               ),
+              platform: 'facebook',
             },
             {
               name: 'WhatsApp',
@@ -66,6 +92,7 @@ export default function ShareModal({closeModal}) {
                   />
                 </svg>
               ),
+              platform: 'whatsapp',
             },
             {
               name: 'Twitter',
@@ -73,10 +100,11 @@ export default function ShareModal({closeModal}) {
                 <svg viewBox="0 0 24 24" className="w-6 h-6">
                   <path 
                     fill="currentColor"
-                    d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"
+                    d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.58-.71-.02-1.38-.22-1.97-.56v.06c0 2.08 1.48 3.81 3.45 4.2-.36.1-.74.16-1.13.16-.27 0-.53-.03-.79-.07.53 1.63 2.08 2.82 3.92 2.85-1.43 1.12-3.23 1.79-5.16 1.79-.34 0-.67-.02-1-.05 1.84 1.19 4.02 1.88 6.34 1.88 7.62 0 11.82-6.31 11.82-11.81 0-.18-.01-.35-.02-.53C21.29 7.56 21.9 6.8 22.46 6z"
                   />
                 </svg>
               ),
+              platform: 'twitter',
             },
             {
               name: 'Mail',
@@ -84,14 +112,16 @@ export default function ShareModal({closeModal}) {
                 <svg viewBox="0 0 24 24" className="w-6 h-6">
                   <path 
                     fill="currentColor"
-                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 13H9v-2h4v2zm0-4H9V7h4v4z"
                   />
                 </svg>
               ),
+              platform: 'mail',
             },
           ].map((option) => (
             <button
               key={option.name}
+              onClick={() => handleSocialShare(option.platform)}
               className="flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-gray-50"
             >
               <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-100">
@@ -121,4 +151,3 @@ export default function ShareModal({closeModal}) {
     </div>
   )
 }
-
